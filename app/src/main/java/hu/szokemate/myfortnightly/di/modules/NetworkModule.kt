@@ -1,12 +1,9 @@
 package hu.szokemate.myfortnightly.di.modules
 
-import android.content.Context
-import android.net.ConnectivityManager
-import androidx.core.content.ContextCompat
-import hu.szokemate.myfortnightly.BuildConfig
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import dagger.Module
 import dagger.Provides
+import hu.szokemate.myfortnightly.BuildConfig
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -21,10 +18,15 @@ class NetworkModule {
     @Singleton
     fun provideOkHttpClient(): OkHttpClient {
         return OkHttpClient.Builder()
-            .apply {
-                if (BuildConfig.DEBUG) {
-                    addNetworkInterceptor(StethoInterceptor())
-                }
+            .addNetworkInterceptor(StethoInterceptor())
+            .addNetworkInterceptor { chain ->
+                val original = chain.request()
+                val url = original.url().newBuilder()
+                    .addQueryParameter("apiKey", BuildConfig.NEWS_API_KEY)
+                    .addQueryParameter("language", BuildConfig.NEWS_LANGUAGE)
+                    .build()
+                val request = original.newBuilder().url(url).build()
+                chain.proceed(request)
             }
             .connectTimeout(30, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)

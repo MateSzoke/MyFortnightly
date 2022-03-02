@@ -11,6 +11,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import hu.szokemate.myfortnightly.R
 import hu.szokemate.myfortnightly.data.domain.model.Article
 import hu.szokemate.myfortnightly.databinding.FragmentArticlesBinding
+import hu.szokemate.myfortnightly.ui.detail.ArticleDetailsFragment
 
 @AndroidEntryPoint
 class ArticlesFragment : Fragment(R.layout.fragment_articles), ArticlesAdapter.Listener {
@@ -48,6 +49,12 @@ class ArticlesFragment : Fragment(R.layout.fragment_articles), ArticlesAdapter.L
     }
 
     override fun onArticleClicked(article: Article) {
-
+        viewModel.openArticle(article)
+        val detailsFragment = ArticleDetailsFragment()
+        parentFragmentManager
+            .beginTransaction()
+            .replace(R.id.fragmentContainer, detailsFragment, detailsFragment.tag)
+            .addToBackStack(detailsFragment.tag)
+            .commit()
     }
 }

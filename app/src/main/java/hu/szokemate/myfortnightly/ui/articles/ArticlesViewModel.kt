@@ -23,4 +23,8 @@ class ArticlesViewModel @Inject constructor(
     private fun getArticles() = viewModelScope.launch {
         articles.value = newsRepository.getArticles()
     }
+
+    fun openArticle(article: Article) {
+        newsRepository.openedArticle = article
+    }
 }

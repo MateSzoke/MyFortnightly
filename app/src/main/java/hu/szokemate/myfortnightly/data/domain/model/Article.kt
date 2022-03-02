@@ -1,5 +1,7 @@
 package hu.szokemate.myfortnightly.data.domain.model
 
+import java.io.Serializable
+
 data class Article(
     val id: Int,
     val source: String,
@@ -7,4 +9,4 @@ data class Article(
     val description: String,
     val publishedAt: String,
     val urlToImage: String,
-)
+) : Serializable

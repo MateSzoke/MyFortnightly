@@ -15,12 +15,13 @@ class NewsRepository @Inject constructor(
     suspend fun getArticles(): List<Article>? = withContext(Dispatchers.IO) {
         val response = newsApi.getTopNews()
         if (response.isSuccessful) {
-            response.body()?.articles?.map { it.toDomainModel() }
+            response.body()?.articles?.mapIndexed { index, article -> article.toDomainModel(index) }
         } else null
     }
 
-    private fun NetworkArticle.toDomainModel(): Article {
+    private fun NetworkArticle.toDomainModel(index: Int): Article {
         return Article(
+            id = index,
             source = source?.name ?: "",
             title = title ?: "",
             description = description ?: "",

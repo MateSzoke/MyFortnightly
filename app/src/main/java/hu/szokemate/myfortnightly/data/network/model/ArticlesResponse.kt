@@ -1,4 +1,4 @@
-package hu.szokemate.myfortnightly.data.model
+package hu.szokemate.myfortnightly.data.network.model
 
 import com.squareup.moshi.JsonClass
 

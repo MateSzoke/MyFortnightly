@@ -6,13 +6,13 @@ import dagger.Component
 import hu.szokemate.myfortnightly.FortnightlyApplication
 import hu.szokemate.myfortnightly.di.modules.ApiModule
 import hu.szokemate.myfortnightly.di.modules.NetworkModule
-import javax.inject.Singleton
+import hu.szokemate.myfortnightly.di.modules.ViewModelModule
 
-@Singleton
 @Component(
     modules = [
         ApiModule::class,
         NetworkModule::class,
+        ViewModelModule::class,
     ]
 )
 interface AppComponent {

@@ -1,16 +1,22 @@
 package hu.szokemate.myfortnightly.di.modules
 
 import com.facebook.stetho.okhttp3.StethoInterceptor
+import com.squareup.moshi.FromJson
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.ToJson
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import hu.szokemate.myfortnightly.BuildConfig
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import java.time.OffsetDateTime
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
-
+@InstallIn(SingletonComponent::class)
 @Module
 class NetworkModule {
 
@@ -36,11 +42,27 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
+    fun provideRetrofit(
+        okHttpClient: OkHttpClient,
+        moshi: Moshi,
+    ): Retrofit {
         return Retrofit.Builder()
             .baseUrl(BuildConfig.NEWS_API_BASE_URL)
             .client(okHttpClient)
-            .addConverterFactory(MoshiConverterFactory.create())
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
     }
+
+    @Provides
+    @Singleton
+    internal fun provideMoshi() = Moshi.Builder()
+        .add(object {
+
+            @FromJson
+            fun fromJson(string: String): OffsetDateTime = OffsetDateTime.parse(string)
+
+            @ToJson
+            fun toJson(value: OffsetDateTime): String = value.toString()
+        })
+        .build()
 }

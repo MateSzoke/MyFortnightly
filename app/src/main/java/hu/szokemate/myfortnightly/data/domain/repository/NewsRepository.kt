@@ -1,5 +1,6 @@
 package hu.szokemate.myfortnightly.data.domain.repository
 
+import androidx.annotation.VisibleForTesting
 import hu.szokemate.myfortnightly.data.domain.model.Article
 import hu.szokemate.myfortnightly.data.network.api.NewsApi
 import hu.szokemate.myfortnightly.data.network.model.NetworkArticle
@@ -27,6 +28,7 @@ class NewsRepository @Inject constructor(
         }
     }
 
+    @VisibleForTesting
     private fun NetworkArticle.toDomainModel(index: Int): Article {
         return Article(
             id = index,

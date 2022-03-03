@@ -19,7 +19,7 @@ class ArticleDetailsFragment : Fragment(R.layout.fragment_article_details) {
     private var _binding: FragmentArticleDetailsBinding? = null
     private val binding get() = _binding!!
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentArticleDetailsBinding.inflate(inflater, container, false)
         return binding.root
     }

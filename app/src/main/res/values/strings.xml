@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">My Fortnightly</string>
     <string name="app_title">Front page</string>
+    <string name="try_again_button">Try again</string>
+    <string name="an_error_occurred">An error occurred while loading the articles, please make sure you have internet connection and try again</string>
 </resources>

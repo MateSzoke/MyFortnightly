@@ -12,7 +12,7 @@ import hu.szokemate.myfortnightly.BuildConfig
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import java.time.OffsetDateTime
+import java.time.ZonedDateTime
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
@@ -59,10 +59,10 @@ class NetworkModule {
         .add(object {
 
             @FromJson
-            fun fromJson(string: String): OffsetDateTime = OffsetDateTime.parse(string)
+            fun fromJson(string: String): ZonedDateTime = ZonedDateTime.parse(string)
 
             @ToJson
-            fun toJson(value: OffsetDateTime): String = value.toString()
+            fun toJson(value: ZonedDateTime): String = value.toString()
         })
         .build()
 }

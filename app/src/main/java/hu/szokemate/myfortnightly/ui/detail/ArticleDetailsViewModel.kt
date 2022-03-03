@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ArticleDetailsViewModel @Inject constructor(
-    private val newsRepository: NewsRepository
+    newsRepository: NewsRepository
 ) : ViewModel() {
 
     val article = newsRepository.openedArticle

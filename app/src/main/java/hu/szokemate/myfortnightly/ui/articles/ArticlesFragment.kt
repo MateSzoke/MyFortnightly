@@ -22,7 +22,7 @@ class ArticlesFragment : Fragment(R.layout.fragment_articles), ArticlesAdapter.L
 
     private lateinit var articlesAdapter: ArticlesAdapter
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentArticlesBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -30,22 +30,35 @@ class ArticlesFragment : Fragment(R.layout.fragment_articles), ArticlesAdapter.L
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupArticleList()
+        setupTryAgainButton()
+        setupArticlesObserver()
+    }
 
-        viewModel.articles.observe(this, { articles ->
-            articlesAdapter.submitList(articles)
-        })
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 
     private fun setupArticleList() {
         articlesAdapter = ArticlesAdapter()
         articlesAdapter.listener = this
         binding.articleList.adapter = articlesAdapter
-        binding.articleList.isVisible = true
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
+    private fun setupTryAgainButton() {
+        binding.tryAgainButton.setOnClickListener {
+            viewModel.getArticles()
+        }
+    }
+
+    private fun setupArticlesObserver() {
+        viewModel.articles.observe(this, { articles ->
+            articlesAdapter.submitList(articles)
+
+            val errorIsVisible = articles.isNullOrEmpty()
+            binding.errorContainer.isVisible = errorIsVisible
+            binding.articleList.isVisible = !errorIsVisible
+        })
     }
 
     override fun onArticleClicked(article: Article) {

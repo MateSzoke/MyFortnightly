@@ -14,13 +14,13 @@ class ArticlesViewModel @Inject constructor(
     private val newsRepository: NewsRepository
 ) : ViewModel() {
 
-    val articles: MutableLiveData<List<Article>> = MutableLiveData()
+    val articles: MutableLiveData<List<Article>?> = MutableLiveData()
 
     init {
         getArticles()
     }
 
-    private fun getArticles() = viewModelScope.launch {
+    fun getArticles() = viewModelScope.launch {
         articles.value = newsRepository.getArticles()
     }
 

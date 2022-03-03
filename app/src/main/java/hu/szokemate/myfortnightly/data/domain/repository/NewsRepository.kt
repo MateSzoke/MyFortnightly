@@ -5,7 +5,8 @@ import hu.szokemate.myfortnightly.data.network.api.NewsApi
 import hu.szokemate.myfortnightly.data.network.model.NetworkArticle
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import java.time.OffsetDateTime
+import java.time.Duration
+import java.time.ZonedDateTime
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -17,10 +18,13 @@ class NewsRepository @Inject constructor(
     var openedArticle: Article? = null
 
     suspend fun getArticles(): List<Article>? = withContext(Dispatchers.IO) {
-        val response = newsApi.getTopNews()
-        if (response.isSuccessful) {
+        try {
+            val response = newsApi.getTopNews()
             response.body()?.articles?.mapIndexed { index, article -> article.toDomainModel(index) }
-        } else null
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
     }
 
     private fun NetworkArticle.toDomainModel(index: Int): Article {
@@ -34,8 +38,8 @@ class NewsRepository @Inject constructor(
         )
     }
 
-    private fun getPublishedAtText(time: OffsetDateTime): String {
-        val currentHour = OffsetDateTime.now().hour
-        return "${currentHour - time.hour}H"
+    private fun getPublishedAtText(publishTime: ZonedDateTime): String {
+        val duration = Duration.between(publishTime, ZonedDateTime.now()).toHours()
+        return if (duration == 0L) "NOW" else "${duration}H"
     }
 }

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
@@ -30,6 +31,7 @@ class ArticleDetailsFragment : Fragment(R.layout.fragment_article_details) {
             Glide.with(requireContext()).load(article.urlToImage).into(binding.articleImage)
             binding.titleText.text = article.title
             binding.descriptionText.text = article.description
+            binding.articleImage.isVisible = article.urlToImage.isNotBlank()
         }
 
         binding.backButton.setOnClickListener {

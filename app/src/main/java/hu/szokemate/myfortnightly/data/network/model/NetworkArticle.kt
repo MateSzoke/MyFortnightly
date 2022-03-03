@@ -1,7 +1,7 @@
 package hu.szokemate.myfortnightly.data.network.model
 
 import com.squareup.moshi.JsonClass
-import java.time.OffsetDateTime
+import java.time.ZonedDateTime
 
 @JsonClass(generateAdapter = true)
 data class NetworkArticle(
@@ -11,6 +11,6 @@ data class NetworkArticle(
     val description: String?,
     val url: String?,
     val urlToImage: String?,
-    val publishedAt: OffsetDateTime?,
+    val publishedAt: ZonedDateTime?,
     val content: String?,
 )

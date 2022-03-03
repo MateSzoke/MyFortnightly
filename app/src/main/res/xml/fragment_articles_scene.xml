@@ -3,31 +3,61 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <Transition
-        app:constraintSetEnd="@id/end"
-        app:constraintSetStart="@id/start"
+        app:constraintSetEnd="@+id/end"
+        app:constraintSetStart="@+id/start"
         app:duration="1000">
+
         <OnSwipe
             app:dragDirection="dragUp"
-            app:touchAnchorId="@id/articleList"
+            app:touchAnchorId="@+id/articleList"
             app:touchAnchorSide="top" />
     </Transition>
 
     <ConstraintSet android:id="@+id/start">
-
+        <Constraint
+            android:id="@+id/errorContainer"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:visibilityMode="ignore" />
     </ConstraintSet>
+
     <ConstraintSet android:id="@+id/end">
+
         <Constraint
-            android:id="@id/toolbar"
-            android:layout_width="50dp"
-            android:layout_height="50dp" />
+            android:id="@+id/toolbar"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/toolbar_height"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <Constraint
-            android:id="@id/titleText"
-            android:text="N" />
+            android:id="@+id/titleText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:alpha="0"
+            app:layout_constraintEnd_toStartOf="@id/toolbar" />
+
+        <Constraint
+            android:id="@+id/toolbarIcon"
+            android:layout_width="@dimen/toolbar_height"
+            android:layout_height="@dimen/toolbar_height"
+            android:alpha="1" />
+
         <Constraint
             android:id="@+id/articleList"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <Constraint
+            android:id="@+id/errorContainer"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:visibilityMode="ignore" />
     </ConstraintSet>
 </MotionScene>

@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -18,8 +17,6 @@ import hu.szokemate.myfortnightly.databinding.ItemArticleBinding
 class ArticlesAdapter : ListAdapter<Article, ArticlesAdapter.ViewHolder>(ArticleComparator) {
 
     var listener: Listener? = null
-
-    var models: List<Article> = emptyList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemArticleBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -53,7 +50,7 @@ class ArticlesAdapter : ListAdapter<Article, ArticlesAdapter.ViewHolder>(Article
 
             if (absoluteAdapterPosition == FIRST_POSITION) {
                 firstArticleImage.isVisible = true
-                articleImage.isInvisible = true
+                articleImage.isVisible = false
 
                 Glide.with(context).load(item.urlToImage).into(firstArticleImage)
             } else {
